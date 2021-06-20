@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FloristShop</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+  <% if user_signed_in? %>
+  Logged in as <strong><%= current_user.email %></strong>.
+  <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+<% else %>
+  <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+  <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+<% end %>
+
+  <% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+   
+   <div id="wrap">
+  <div class="header">
+
+    <div class="logo"><a href="#"><img src="/assets/logo.gif" alt="" border="0" /></a></div>
+    <div id="menu">
+   
+      <ul>
+      
+        <li class="selected"><a href="#">home</a></li>
+        <li><a href="about.html">about us</a></li>
+        <li><a href="category.html">flowers</a></li>
+        <li><a href="specials.html">specials gifts</a></li>
+        <li><a href="myaccount.html">my account</a></li>
+        <li><a href="contact.html">contact</a></li>
+        <li><a href="details.html">prices</a></li>
+      </ul>
+    </div>
+  </div>
+  <% if session[:admin]%>
+         <h1> Welcome admin </h1>
+          <li><a href="/admin/logout"> Logout</a></li>
+              <% else %>
+            <li><a href="/admin/login">Login</a></li>
+            <% end %>
+
+
+            <%= form_with url: "/gallery/search", local: true,method: :post do |form| %>
+  <%= form.label :query, "Search for:" %>
+  <%= form.text_field :query %>
+  <%= form.submit "Search" %>
+<% end %>
+  <%= yield%>
+  
+    
+        <div class="prod_img"><a href="#"><img src="https://media.architecturaldigest.com/photos/56f9829b15f605c343d44c9a/master/w_1600%2Cc_limit/FlowerBoy_1.jpg" alt="" border="0" width="700" height="300" /></a></div>
+     
+      
+    
+    <!--end of left content-->
+    
+    <!--end of right content-->
+    <div class="clear"></div>
+  </div>
+  <!--end of center content-->
+  
+</div>
+   
+  </body>
+</html>
